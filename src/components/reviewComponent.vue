@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { useReviewStore } from "../stores/reviewStore.ts";
+import { useReviewStore } from "../stores/reviewStore";
 import { ref, provide } from "vue";
-import CreationForm from "../views/CreationPage.vue";
+import CreationForm from "./CreationPage.vue";
+import router from "../router";
 
+const store = useReviewStore();
 const showDialog = ref(false);
 
+// Receiving props from the Parent component
 const props = defineProps({
     data: {
         type: Object,
@@ -12,14 +15,17 @@ const props = defineProps({
     }
 });
 
-const store = useReviewStore();
+// Providing filler data to edit component
+provide("filler_data", props.data);
 
-const handleDelete = async (id) => {
+const isDashboard = router.currentRoute.value.fullPath === '/dashboard';
+
+const handleDelete = async (id: any) => {
     await store.deleteReview(id);
     window.location.reload();
 }
 
-const handleEdit = async ({ title, type, rating, pros, cons, suggestions, user_id }) => {
+const handleEdit = async ({ title, type, rating, pros, cons, suggestions, user_id }: any) => {
     if (rating.value <= 0 || rating.value >= 6) {
         return alert("Enter a proper rating value")
     }
@@ -46,9 +52,6 @@ const handleEdit = async ({ title, type, rating, pros, cons, suggestions, user_i
     }
 }
 
-provide("filler_data", props.data);
-
-
 </script>
 
 <template>
@@ -64,7 +67,7 @@ provide("filler_data", props.data);
                     v-for="y of Array.from({ length: 5 - data.rating }).keys()"></i>
             </div>
         </div>
-        <div v-show="data.username" class="text-zinc-500 italic">- {{ data.username }}</div>
+        <div v-show="!isDashboard" class="text-zinc-500 italic">- {{ data.user.username }}</div>
         <div>
             <div class="text-green-500 font-semibold">Pros</div>
             {{ data.pros }}
@@ -77,7 +80,7 @@ provide("filler_data", props.data);
             <div>
                 <v-dialog v-model="showDialog" transition="dialog-top-transition" class="w-1/2">
                     <template v-slot:activator="{ props: activatorProps }">
-                        <v-btn v-show="!data.username" color="green" v-bind="activatorProps" size="small" class="mx-2"
+                        <v-btn v-show="isDashboard" color="green" v-bind="activatorProps" size="small" class="mx-2"
                             @click=""><i class="pi pi-pencil"></i>
                         </v-btn>
                     </template>
@@ -85,7 +88,7 @@ provide("filler_data", props.data);
                         <CreationForm @send-data="handleEdit" />
                     </template>
                 </v-dialog>
-                <v-btn @click="handleDelete(data.id)" v-show="!data.username" size="small" color="red"><i
+                <v-btn @click="handleDelete(data.id)" v-show="isDashboard" size="small" color="red"><i
                         class="pi pi-trash"></i></v-btn>
             </div>
         </div>

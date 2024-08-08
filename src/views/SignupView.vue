@@ -3,14 +3,17 @@ import { ref } from "vue";
 import axios from "axios";
 import router from "../router";
 
+// Ref variables for form input values
 const username = ref("");
 const email = ref("");
 const password = ref("");
 const con_password = ref("");
 
-const dupError = ref(false);
+// Error messages 
+const errorMes = ref([]);
 const passError = ref(false);
 
+// Function to clear all values when showing errors
 const allClear = () => {
     username.value = "";
     email.value = "";
@@ -18,19 +21,17 @@ const allClear = () => {
     con_password.value = "";
 }
 
+// The Function that handles registration
 const handleRegister = async () => {
     if (password.value !== con_password.value) {
         return passError.value = password.value !== con_password.value ? true : false;
-        console.log(passError.value);
     }
-
 
     if (password.value && email.value && username.value) {
         try {
-            const userData = (await axios.post("http://127.0.0.1:3333/register", { email: email.value, username: username.value, password: password.value })).data;
-            console.log(userData);
+            const userData = (await axios.post("http://127.0.0.1:3333/register", { username: username.value, email: email.value, password: password.value })).data;
 
-            dupError.value = false;
+            errorMes.value = [];
             passError.value = false;
 
             localStorage.setItem("token", userData.token);
@@ -38,22 +39,16 @@ const handleRegister = async () => {
             localStorage.setItem("user_id", userData.user_id);
             router.push("/reviews")
         }
-        catch (err) {
-            console.log(err);
-            if (err.response.data.errno === 1062) {
-                dupError.value = true;
-
-            }
+        catch (err: any) {
+            if (err.response.data) errorMes.value = err.response.data;
             allClear();
         }
     }
 }
 
-
 </script>
 
 <template>
-
     <div class="min-h-screen flex justify-center items-center bg-gradient-to-r from-sky-600 to-cyan-400 px-10">
         <form @submit.prevent="handleRegister()"
             class="bg-white flex justify-center flex-wrap w-full lg:w-1/3 rounded-md shadow-xl p-10">
@@ -62,7 +57,7 @@ const handleRegister = async () => {
                 <v-text-field v-model="username" label="Username" required></v-text-field>
             </div>
             <div class="w-full">
-                <v-text-field v-model="email" label="Email Address" required></v-text-field>
+                <v-text-field v-model="email" label="Email Address" type="email" required></v-text-field>
             </div>
             <div class="w-full">
                 <v-text-field v-model="password" label="Password" type="password" required></v-text-field>
@@ -70,12 +65,12 @@ const handleRegister = async () => {
             <div class="w-full">
                 <v-text-field v-model="con_password" label="Confirm Password" type="password" required></v-text-field>
             </div>
-            <div class="my-3 w-full text-center">Already have an account ? <a href="/signin"
-                    class="underline text-lime-600">Sign
-                    In</a>
+            <div class="my-3 w-full text-center">
+                Already have an account ?
+                <a href="/signin" class="underline text-lime-600">Sign In</a>
             </div>
             <div class="text-sm text-red-500 my-3 text-center">
-                <div v-show="dupError">Username / Email already exists</div>
+                <div v-show="errorMes" v-for="x in errorMes">{{ x['message'] }}</div>
                 <div v-show="passError">Passwords don't match</div>
             </div>
             <div class="w-full my-3 flex justify-center">

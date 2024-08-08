@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { useReviewStore } from "../stores/reviewStore.ts";
+import { useReviewStore } from "../stores/reviewStore";
 import { ref, defineEmits } from "vue";
-import router from "../router";
 import { inject } from "vue";
 
 const emit = defineEmits(['send-data']);
 
+// Filler data incase component used for Edit review option
 const data = inject("filler_data", { title: "", type: "", rating: 0, pros: "", cons: "", suggestions: "", user_id: "" })
 
 const title = ref(data.title);

@@ -1,4 +1,4 @@
-import CreationPage from '@/views/CreationPage.vue'
+import CreationPage from '@/components/CreationPage.vue'
 import DashboardPage from '@/views/DashboardPage.vue'
 import LandingPage from '@/views/LandingPage.vue'
 import ReviewsView from '@/views/ReviewsView.vue'

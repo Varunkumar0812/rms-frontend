@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { useReviewStore } from "../stores/reviewStore.ts";
+import { useReviewStore } from "../stores/reviewStore";
 import { watchEffect, computed, ref } from "vue";
 import ReviewComponent from "@/components/reviewComponent.vue";
-import CreationForm from "./CreationPage.vue";
+import CreationForm from "../components/CreationPage.vue";
 import router from "../router";
+import axios from 'axios';
 
 const store = useReviewStore();
 const reviews = computed(() => store.reviews);
 
-const username = ref("");
+const username = ref();
 const showDialog = ref(false);
 
 watchEffect(async () => {
@@ -16,8 +17,7 @@ watchEffect(async () => {
     username.value = localStorage.getItem("username");
 });
 
-
-const handleCreate = async ({ title, type, rating, pros, cons, suggestions, user_id }) => {
+const handleCreate = async ({ title, type, rating, pros, cons, suggestions, user_id }: any) => {
     if (rating.value <= 0 || rating.value >= 6) {
         return alert("Enter a proper rating value")
     }
@@ -43,12 +43,11 @@ const handleCreate = async ({ title, type, rating, pros, cons, suggestions, user
     }
 }
 
-
-const handleLogout = () => {
+const handleLogout = async () => {
+    const res = await axios.post("http://127.0.0.1:3333/logout");
     localStorage.clear();
     router.push("/")
 }
-
 
 </script>
 
@@ -60,7 +59,7 @@ const handleLogout = () => {
                 <v-btn color="purple" class="text-capitalize" @click="router.push('/reviews')">View All Reviews</v-btn>
                 <v-dialog v-model="showDialog" transition="dialog-top-transition" class="w-1/2">
                     <template v-slot:activator="{ props: activatorProps }">
-                        <v-btn color="green" v-bind="activatorProps" class="text-capitalize mx-2">Submit a
+                        <v-btn color="green" v-bind="activatorProps" class="text-capitalize ml-2">Submit a
                             Review</v-btn>
                     </template>
                     <template v-slot:default="{ isActive }">

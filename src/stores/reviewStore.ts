@@ -1,14 +1,13 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from "axios";
 
 export const useReviewStore = defineStore('review', () => {
     const reviews = ref([]);
 
-    const fetchReviews = async () => {
+    const fetchReviews = async (query: string) => {
         try {
-            const data: any = (await axios.get("http://127.0.0.1:3333/review", { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })).data;
-            console.log(data);
+            const data: any = (await axios.get(`http://127.0.0.1:3333/review${query}`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })).data;
             reviews.value = data;
         }
         catch (err) {
@@ -16,13 +15,9 @@ export const useReviewStore = defineStore('review', () => {
         }
     }
 
-
     const fetchUserReviews = async () => {
         try {
-            console.log(localStorage.getItem("user_id"));
-
             const data: any = (await axios.get(`http://127.0.0.1:3333/review/user/${localStorage.getItem("user_id")}`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })).data;
-            console.log(data);
             reviews.value = data;
         }
         catch (err) {
@@ -36,7 +31,6 @@ export const useReviewStore = defineStore('review', () => {
         }
         catch (err) {
             console.log(err);
-
         }
     }
 
@@ -59,7 +53,5 @@ export const useReviewStore = defineStore('review', () => {
         }
     }
 
-
-
     return { reviews, fetchReviews, fetchUserReviews, deleteReview, createReview, editReview }
-})
+});

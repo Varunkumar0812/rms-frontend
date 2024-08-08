@@ -3,15 +3,19 @@ import { ref } from "vue";
 import axios from "axios";
 import router from "../router";
 
+// Ref variables to track all form input values
 const email = ref("");
 const password = ref("");
 const invalidUser = ref(false);
+const errorMes = ref([]);
 
+// Function to clear all input fields when showing errors
 const allClear = () => {
     email.value = "";
     password.value = "";
 }
 
+// Function that handles login
 const handleLogin = async () => {
     try {
         const userData = (await axios.post("http://127.0.0.1:3333/login", { email: email.value, password: password.value })).data;
@@ -25,11 +29,12 @@ const handleLogin = async () => {
             router.push("/reviews");
         }
     }
-    catch (err) {
+    catch (err: any) {
+        errorMes.value = [];
+        if (err?.response?.data) errorMes.value = err.response.data;
         invalidUser.value = true;
         allClear();
     }
-
 }
 
 </script>
@@ -45,11 +50,13 @@ const handleLogin = async () => {
             <div class="w-full">
                 <v-text-field v-model="password" label="Password" type="password" required></v-text-field>
             </div>
-            <div class="my-3 w-full text-center">Doesn't have an account ? <a href="/signup"
-                    class="underline text-lime-600">Sign Up</a>
+            <div class="my-3 w-full text-center">
+                Doesn't have an account ?
+                <a href="/signup" class="underline text-lime-600">Sign Up</a>
             </div>
             <div class="text-sm text-red-500 my-3 text-center">
-                <div v-show="invalidUser">Invalid Email Address or Password</div>
+                <div v-show="invalidUser">Wrong Password, Try again !</div>
+                <div v-show="errorMes" v-for="x in errorMes">{{ x['message'] }}</div>
             </div>
             <div class="w-full my-3 flex justify-center">
                 <v-btn color="green w-full" size="large" type="submit">Login</v-btn>
