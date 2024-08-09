@@ -7,8 +7,9 @@ export const useReviewStore = defineStore('review', () => {
 
     const fetchReviews = async (query: string) => {
         try {
-            const data: any = (await axios.get(`http://127.0.0.1:3333/review${query}`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })).data;
-            reviews.value = data.reverse();
+            const res: any = (await axios.get(`http://127.0.0.1:3333/review${query}`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })).data;
+            reviews.value = res.data;
+            return res.meta.total;
         }
         catch (err) {
             console.log(err);
@@ -18,7 +19,7 @@ export const useReviewStore = defineStore('review', () => {
     const fetchUserReviews = async () => {
         try {
             const data: any = (await axios.get(`http://127.0.0.1:3333/review/user/${localStorage.getItem("user_id")}`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })).data;
-            reviews.value = data.reverse();
+            reviews.value = data;
         }
         catch (err) {
             console.log(err);
