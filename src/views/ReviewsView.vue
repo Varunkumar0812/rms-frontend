@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useReviewStore } from "../stores/reviewStore";
 import { computed, ref, watch, onMounted } from "vue";
-import ReviewComponent from "@/components/reviewComponent.vue";
+import ReviewComponent from "@/components/ReviewComponent.vue";
 import router from "../router";
 
 const store = useReviewStore();
@@ -95,8 +95,8 @@ watch(searchQuery, () => {
             </div>
             <div class="w-1/5 flex justify-center">
                 <v-radio-group :disabled="orderDisabled" v-model="orderSelect" single-line>
-                    <v-radio label="A-Z" value="ASC"></v-radio>
-                    <v-radio label="Z-A" value="DESC"></v-radio>
+                    <v-radio label="A-Z" value="asc"></v-radio>
+                    <v-radio label="Z-A" value="desc"></v-radio>
                 </v-radio-group>
             </div>
         </div>

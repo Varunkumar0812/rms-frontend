@@ -33,7 +33,7 @@ const sendData = () => {
 </script>
 
 <template>
-    <form @submit.prevent="sendData()" class="bg-white w-full p-10 rounded-lg shadow-xl">
+    <form @submit.prevent="sendData()" class="bg-white w-full p-3 sm:p-10 rounded-lg shadow-xl">
         <div class="p-2 overflow-y-scroll">
             <div class="text-2xl font-bold text-center w-full mb-10">
                 Write a Review
@@ -45,8 +45,9 @@ const sendData = () => {
                 <v-select v-model="type" label="Review type"
                     :items="['University Review', 'Food Review', 'Hotel Review', 'Product Review', 'Travel Review']"></v-select>
             </div>
-            <div>
-                <v-select v-model="rating" label="Rating" :items="[1, 2, 3, 4, 5]"></v-select>
+            <div class="flex flex-wrap sm:flex-nowrap justify-center items-center mb-2 text-zinc-500">
+                <div>Rating : </div>
+                <v-rating v-model="rating" hover active-color="yellow" color="orange-lighten-1"></v-rating>
             </div>
             <div>
                 <v-text-field v-model="pros" label="Pros" type="text" required></v-text-field>

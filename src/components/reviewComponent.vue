@@ -6,6 +6,7 @@ import router from "../router";
 
 const store = useReviewStore();
 const showDialog = ref(false);
+const deleteConfirm = ref(false);
 
 // Receiving props from the Parent component
 const props = defineProps({
@@ -22,6 +23,7 @@ const isDashboard = router.currentRoute.value.fullPath === '/dashboard';
 
 const handleDelete = async (id: any) => {
     await store.deleteReview(id);
+    deleteConfirm.value = false;
     window.location.reload();
 }
 
@@ -55,9 +57,9 @@ const handleEdit = async ({ title, type, rating, pros, cons, suggestions, user_i
 </script>
 
 <template>
-    <div class="p-5 bg-white rounded-md shadow-xl">
+    <div class="p-3 sm:p-5 bg-white rounded-md shadow-xl">
         <div class="flex justify-between">
-            <div class="text-xl font-semibold">{{ data.title }}
+            <div class="text-lg sm:text-xl font-semibold">{{ data.title }}
                 <v-chip color="blue" variant="flat" size="x-small">{{ data.type
                     }}</v-chip>
             </div>
@@ -75,10 +77,10 @@ const handleEdit = async ({ title, type, rating, pros, cons, suggestions, user_i
         <div>
             <div class="text-red-500 font-semibold">Cons</div>{{ data.cons }}
         </div>
-        <div class="flex justify-between">
+        <div class="flex flex-col sm:flex-row sm:justify-between">
             <div class="text-zinc-500">Suggestions : {{ data.suggestions }}</div>
-            <div>
-                <v-dialog v-model="showDialog" transition="dialog-top-transition" class="w-1/2">
+            <div class="flex justify-end">
+                <v-dialog v-model="showDialog" transition="dialog-top-transition" class="w-full md:w-1/2">
                     <template v-slot:activator="{ props: activatorProps }">
                         <v-btn v-show="isDashboard" color="green" v-bind="activatorProps" size="small" class="mx-2"
                             @click=""><i class="pi pi-pencil"></i>
@@ -88,8 +90,22 @@ const handleEdit = async ({ title, type, rating, pros, cons, suggestions, user_i
                         <CreationForm @send-data="handleEdit" />
                     </template>
                 </v-dialog>
-                <v-btn @click="handleDelete(data.id)" v-show="isDashboard" size="small" color="red"><i
-                        class="pi pi-trash"></i></v-btn>
+                <v-dialog v-model="deleteConfirm" transition="dialog-top-transition" class="w-full md:w-1/3">
+                    <template v-slot:activator="{ props: activatorProps }">
+                        <v-btn @click="" v-bind="activatorProps" v-show="isDashboard" size="small" color="red"><i
+                                class="pi pi-trash"></i></v-btn>
+                    </template>
+                    <template v-slot:default="{ isActive }">
+                        <div
+                            class="bg-white shadow-xl rounded-lg w-full p-10 flex flex-col items-center justify-center">
+                            <div>Are you sure you want to delete ?</div>
+                            <div class="mt-5 flex px-10 w-1/2 justify-between">
+                                <v-btn color="green" class="mx-1" @click="handleDelete(data.id)">Yes</v-btn>
+                                <v-btn color=red class="mx-1" @click="deleteConfirm = false">No</v-btn>
+                            </div>
+                        </div>
+                    </template>
+                </v-dialog>
             </div>
         </div>
     </div>

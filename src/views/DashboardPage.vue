@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useReviewStore } from "../stores/reviewStore";
 import { watchEffect, computed, ref } from "vue";
-import ReviewComponent from "@/components/reviewComponent.vue";
+import ReviewComponent from "@/components/ReviewComponent.vue";
 import CreationForm from "../components/CreationPage.vue";
 import router from "../router";
 import axios from 'axios';
@@ -29,7 +29,7 @@ const handleCreate = async ({ title, type, rating, pros, cons, suggestions, user
         pros: pros.value,
         cons: cons.value,
         suggestions: suggestions.value,
-        user_id: user_id
+        userId: user_id
     }
 
     try {
@@ -38,8 +38,7 @@ const handleCreate = async ({ title, type, rating, pros, cons, suggestions, user
         showDialog.value = false;
         window.location.reload();
     }
-    catch (err) {
-
+    catch (err: any) {
     }
 }
 
@@ -52,26 +51,28 @@ const handleLogout = async () => {
 </script>
 
 <template>
-    <div class="p-10 bg-yellow-300 min-h-screen">
-        <div class="text-2xl w-full text-center font-semibold py-5 flex justify-between px-5">
+    <div class="p-3 sm:p-10 bg-yellow-300 min-h-screen">
+        <div
+            class="text-lg sm:text-2xl w-full text-center font-semibold py-5 flex flex-wrap sm:flex-nowrap justify-between px-5">
             Welcome back, {{ username }}
-            <div>
-                <v-btn color="purple" class="text-capitalize" @click="router.push('/reviews')">View All Reviews</v-btn>
-                <v-dialog v-model="showDialog" transition="dialog-top-transition" class="w-1/2">
+            <div class="flex flex-col sm:block justify-center items-center w-full sm:w-auto">
+                <v-btn color="purple" class="text-capitalize m-1" @click="router.push('/reviews')">View All
+                    Reviews</v-btn>
+                <v-dialog v-model="showDialog" transition="dialog-top-transition" class="w-full md:w-1/2">
                     <template v-slot:activator="{ props: activatorProps }">
-                        <v-btn color="green" v-bind="activatorProps" class="text-capitalize ml-2">Submit a
+                        <v-btn color="green" v-bind="activatorProps" class="text-capitalize ml-2 m-1">Submit a
                             Review</v-btn>
                     </template>
                     <template v-slot:default="{ isActive }">
                         <CreationForm @send-data="handleCreate" />
                     </template>
                 </v-dialog>
-                <v-btn @click="handleLogout()" color="red" class="text-capitalize mx-2">Log Out</v-btn>
+                <v-btn @click="handleLogout()" color="red" class="text-capitalize mx-2 m-1">Log Out</v-btn>
             </div>
         </div>
         <div class="italic text-zinc-400 text-center mt-10" v-if="reviews.length == 0">No reviews available !</div>
         <div v-for="x in reviews" class="p-1">
-            <ReviewComponent :data="x" />
+            <ReviewComponent :data="x" class="hover:scale-[1.01] transition ease-in-out" />
         </div>
     </div>
 </template>
