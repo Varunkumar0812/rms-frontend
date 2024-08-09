@@ -124,11 +124,16 @@ watch(searchQuery, () => {
                     <v-select v-model="sortSelect" label="Select a type" variant="solo" hide-details :items="sortColumn"
                         density="compact" single-line></v-select>
                 </div>
-                <div class="w-full sm:w-1/5 flex justify-center items-center">
+                <div class="w-full sm:w-1/6 flex justify-center items-center">
                     <v-radio-group :disabled="orderDisabled" v-model="orderSelect" single-line inline hide-details>
                         <v-radio label="A-Z" value="asc"></v-radio>
                         <v-radio label="Z-A" value="desc"></v-radio>
                     </v-radio-group>
+                </div>
+                <div class="w-full sm:w-1/12 flex justify-center items-center">
+                    <v-btn @click="allClear()" variant="tonal" color="red" class="text-capitalize flex items-center">
+                        <div>Clear Filter</div><i class="pi pi-times-circle ml-2" />
+                    </v-btn>
                 </div>
             </div>
 

@@ -1,10 +1,11 @@
-import CreationPage from '@/components/CreationPage.vue'
-import DashboardPage from '@/views/DashboardPage.vue'
-import LandingPage from '@/views/LandingPage.vue'
-import ReviewsView from '@/views/ReviewsView.vue'
-import SigninView from '@/views/SigninView.vue'
-import SignupView from '@/views/SignupView.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import CreationPage from '@/components/CreationPage.vue';
+import DashboardPage from '@/views/DashboardPage.vue';
+import LandingPage from '@/views/LandingPage.vue';
+import NotFoundPage from '@/views/NotFoundPage.vue';
+import ReviewsView from '@/views/ReviewsView.vue';
+import SigninView from '@/views/SigninView.vue';
+import SignupView from '@/views/SignupView.vue';
+import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
   { path: "/", name: "landing-page", component: LandingPage },
@@ -12,7 +13,8 @@ const routes = [
   { path: "/signup", name: "register", component: SignupView },
   { path: "/reviews", name: "reviews", component: ReviewsView, meta: { requiresAuth: true } },
   { path: "/dashboard", name: "dashboard", component: DashboardPage, meta: { requiresAuth: true } },
-  { path: "/writeReview", name: "review-creation", component: CreationPage, meta: { requiresAuth: true } }
+  { path: "/writeReview", name: "review-creation", component: CreationPage, meta: { requiresAuth: true } },
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundPage }
 ];
 
 const router = createRouter({
