@@ -1,7 +1,7 @@
 <script setup lang="ts">
 </script>
 
-<template>
+<template class="font-['Roboto_sans']">
   <RouterView />
 </template>
 

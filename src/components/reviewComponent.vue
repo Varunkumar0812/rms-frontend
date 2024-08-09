@@ -63,7 +63,7 @@ const handleEdit = async ({ title, type, rating, pros, cons, suggestions, user_i
                 <v-chip color="blue" variant="flat" size="x-small">{{ data.type
                     }}</v-chip>
             </div>
-            <div>
+            <div class="text-sm md:text-xl">
                 <i class="pi pi-star-fill p-1 text-yellow-500"
                     v-for="y of Array.from({ length: data.rating }).keys()"></i><i class="pi pi-star p-1 text-zinc-400"
                     v-for="y of Array.from({ length: 5 - data.rating }).keys()"></i>
@@ -99,9 +99,9 @@ const handleEdit = async ({ title, type, rating, pros, cons, suggestions, user_i
                         <div
                             class="bg-white shadow-xl rounded-lg w-full p-10 flex flex-col items-center justify-center">
                             <div>Are you sure you want to delete ?</div>
-                            <div class="mt-5 flex px-10 w-1/2 justify-between">
-                                <v-btn color="green" class="mx-1" @click="handleDelete(data.id)">Yes</v-btn>
-                                <v-btn color=red class="mx-1" @click="deleteConfirm = false">No</v-btn>
+                            <div class="mt-5 flex w-1/2 justify-between">
+                                <v-btn color="green" class="mx-1 w-1/2" @click="handleDelete(data.id)">Yes</v-btn>
+                                <v-btn color=red class="mx-1 w-1/2" @click="deleteConfirm = false">No</v-btn>
                             </div>
                         </div>
                     </template>
