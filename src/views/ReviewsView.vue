@@ -82,17 +82,17 @@ watch([typeSelect, ratingSelect, sortSelect, orderSelect, selectedPage], async (
 });
 
 // Searching Feature
-watch(searchQuery, () => {
+watch(searchQuery, async () => {
     allClear();
     reviews.value = store.reviews;
 
     const new_reviews = reviews.value.filter((ele) => {
         if (JSON.stringify(Object.values
             (ele).join("")).toLowerCase().includes(searchQuery.value.toLowerCase())) {
-            console.log(JSON.stringify(ele).toLowerCase());
+            console.log(JSON.stringify(Object.values(ele).join("")).toLowerCase());
             console.log(searchQuery.value.toLowerCase());
 
-            return true
+            return true;
         };
     });
 
