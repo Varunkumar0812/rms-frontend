@@ -6,7 +6,7 @@ import { inject } from "vue";
 const emit = defineEmits(['send-data']);
 
 // Filler data incase component used for Edit review option
-const data = inject("filler_data", { title: "", type: "", rating: 0, pros: "", cons: "", suggestions: "", user_id: "" })
+const data = inject("filler_data", { title: "", type: "", rating: 1, pros: "", cons: "", suggestions: "", user_id: "" })
 
 const title = ref(data.title);
 const type = ref(data.type);

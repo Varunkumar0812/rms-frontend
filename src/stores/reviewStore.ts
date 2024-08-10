@@ -4,10 +4,11 @@ import axios from "axios";
 
 export const useReviewStore = defineStore('review', () => {
     const reviews = ref([]);
+    const headers = { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } };
 
     const fetchReviews = async (query: string) => {
         try {
-            const res: any = (await axios.get(`http://127.0.0.1:3333/review${query}`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })).data;
+            const res: any = (await axios.get(`http://127.0.0.1:3333/review${query}`, headers)).data;
             reviews.value = res.data;
             return res.meta.total;
         }
@@ -18,7 +19,7 @@ export const useReviewStore = defineStore('review', () => {
 
     const fetchUserReviews = async () => {
         try {
-            const data: any = (await axios.get(`http://127.0.0.1:3333/review/user/${localStorage.getItem("user_id")}`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })).data;
+            const data: any = (await axios.get(`http://127.0.0.1:3333/review/user/${localStorage.getItem("user_id")}`, headers)).data;
             reviews.value = data;
         }
         catch (err) {
@@ -27,31 +28,15 @@ export const useReviewStore = defineStore('review', () => {
     }
 
     const deleteReview = async (id: any) => {
-        try {
-            const res = await axios.delete(`http://127.0.0.1:3333/review/${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
-        }
-        catch (err) {
-            console.log(err);
-        }
+        return await axios.delete(`http://127.0.0.1:3333/review/${id}`, headers);
     }
 
     const createReview = async (data: any) => {
-        try {
-            const res = await axios.post("http://127.0.0.1:3333/review", data, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
-        }
-        catch (err) {
-            console.log(err);
-        }
+        return await axios.post("http://127.0.0.1:3333/review", data, headers);
     }
 
-
     const editReview = async (data: any, id: any) => {
-        try {
-            const res = await axios.patch(`http://127.0.0.1:3333/review/${id}`, data, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
-        }
-        catch (err) {
-            console.log(err);
-        }
+        return await axios.patch(`http://127.0.0.1:3333/review/${id}`, data, headers);
     }
 
     return { reviews, fetchReviews, fetchUserReviews, deleteReview, createReview, editReview }
