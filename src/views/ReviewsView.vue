@@ -47,6 +47,7 @@ const allClear = () => {
     ratingSelect.value = null;
     sortSelect.value = null;
     orderSelect.value = null;
+    searchQuery.value = "";
     selectedPage.value = 1;
 }
 
@@ -78,8 +79,6 @@ watch(() => store.reviews, () => {
 // Filtering, Sorting and Searching
 watch([typeSelect, ratingSelect, sortSelect, orderSelect, searchQuery, selectedPage], async (newValues, old) => {
     orderDisabled.value = !(sortSelect.value != null);
-    console.log(createQuery());
-
     if (JSON.stringify([typeSelect.value, ratingSelect.value, sortSelect.value, orderSelect.value, searchQuery.value]) !== JSON.stringify(old.slice(0, 5))) selectedPage.value = 1;
     length.value = Math.ceil(await store.fetchReviews(createQuery()) / 2);
 });
@@ -117,7 +116,8 @@ watch([typeSelect, ratingSelect, sortSelect, orderSelect, searchQuery, selectedP
 
                 <!-- Option to clear all the selection -->
                 <div class="w-full sm:w-1/12 flex justify-center items-center">
-                    <v-btn @click="allClear()" variant="tonal" color="red" class="text-capitalize flex items-center">
+                    <v-btn @click="() => allClear()" variant="tonal" color="red"
+                        class="text-capitalize flex items-center">
                         <div>Clear Filter</div><i class="pi pi-times-circle ml-2" />
                     </v-btn>
                 </div>
