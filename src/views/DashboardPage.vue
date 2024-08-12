@@ -101,9 +101,8 @@ const triggerAlert = async (res: any) => {
                     </v-dialog>
 
                     <!-- Alert Message to show result of CRUD operation -->
-                    <div v-show="showMessageAlert.mes"
-                        class="bg-yellow-500 fixed z-10 top-8 right-0 left-0 flex justify-center">
-                        <div class="sticky w-1/4 text-white text-base font-normal p-5 rounded-lg shadow-lg
+                    <div v-show="showMessageAlert.mes" class="fixed z-10 top-8 right-0 left-0 flex justify-center">
+                        <div class="bg-orange-500 sticky w-1/4 text-white text-base font-normal p-5 rounded-lg shadow-lg
                             flex justify-between items-center" :class="`bg-${showMessageAlert.code}-500`">
                             <div>{{ showMessageAlert.mes }}</div>
                             <i class="pi pi-check-circle"></i>

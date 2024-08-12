@@ -11,7 +11,7 @@ const con_password = ref("");
 
 // Error messages 
 const errorMes = ref([]);
-const passError = ref(false);
+const passError: any = ref([]);
 
 // Function to clear all values when showing errors
 const allClear = () => {
@@ -23,8 +23,12 @@ const allClear = () => {
 
 // The Function that handles registration
 const handleRegister = async () => {
-    if (password.value !== con_password.value) {
-        return passError.value = password.value !== con_password.value ? true : false;
+    if (password.value !== con_password.value || !/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password.value)) {
+        passError.value = password.value !== con_password.value ? ['Passwords dont match'] : [];
+        if (!/^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password.value)) {
+            return passError.value.push("Use atleast one capital letter, a number and a symbol and minimum 8 length for Password");
+        }
+        return;
     }
 
     if (password.value && email.value && username.value) {
@@ -32,7 +36,7 @@ const handleRegister = async () => {
             const userData = (await axios.post("http://127.0.0.1:3333/register", { username: username.value, email: email.value, password: password.value })).data;
 
             errorMes.value = [];
-            passError.value = false;
+            passError.value = '';
 
             localStorage.setItem("token", userData.token);
             localStorage.setItem("username", username.value);
@@ -71,7 +75,7 @@ const handleRegister = async () => {
             </div>
             <div class="text-sm text-red-500 my-3 text-center">
                 <div v-show="errorMes" v-for="x in errorMes">{{ x['message'] }}</div>
-                <div v-show="passError">Passwords don't match</div>
+                <div v-show="passError" v-for="x in passError">{{ x }}</div>
             </div>
             <div class="w-full my-3 flex justify-center">
                 <v-btn color="green w-full" size="large" type="submit">Register</v-btn>

@@ -32,9 +32,7 @@ const handleLogin = async () => {
     catch (err: any) {
         errorMes.value = [];
         if (err?.response?.data) errorMes.value = err.response.data;
-        console.log(errorMes.value);
-
-        if (errorMes.value.length != 0) if (!errorMes.value[0].rule) invalidUser.value = true;
+        if (errorMes.value.length == 0) invalidUser.value = true;
         allClear();
     }
 }
