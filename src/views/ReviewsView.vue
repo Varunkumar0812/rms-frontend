@@ -58,6 +58,7 @@ const createQuery = () => {
     if (ratingSelect.value) query += "rating=" + ratingSelect.value + "&"
     if (sortSelect.value) query += "sortBy=" + sortSelect.value + "&"
     if (orderSelect.value) query += "sortOrder=" + orderSelect.value + "&"
+    if (searchQuery.value) query += "searchFor=" + searchQuery.value + "&"
 
     return query.replace(" ", "%20");
 }
@@ -74,29 +75,13 @@ watch(() => store.reviews, () => {
     reviews.value = store.reviews;
 })
 
-// Sorting and Filtering
-watch([typeSelect, ratingSelect, sortSelect, orderSelect, selectedPage], async (newValues, old) => {
+// Filtering, Sorting and Searching
+watch([typeSelect, ratingSelect, sortSelect, orderSelect, searchQuery, selectedPage], async (newValues, old) => {
     orderDisabled.value = !(sortSelect.value != null);
-    if (JSON.stringify([typeSelect.value, ratingSelect.value, sortSelect.value, orderSelect.value]) !== JSON.stringify(old.slice(0, 4))) selectedPage.value = 1;
+    console.log(createQuery());
+
+    if (JSON.stringify([typeSelect.value, ratingSelect.value, sortSelect.value, orderSelect.value, searchQuery.value]) !== JSON.stringify(old.slice(0, 5))) selectedPage.value = 1;
     length.value = Math.ceil(await store.fetchReviews(createQuery()) / 2);
-});
-
-// Searching Feature
-watch(searchQuery, async () => {
-    allClear();
-    reviews.value = store.reviews;
-
-    const new_reviews = reviews.value.filter((ele) => {
-        if (JSON.stringify(Object.values
-            (ele).join("")).toLowerCase().includes(searchQuery.value.toLowerCase())) {
-            console.log(JSON.stringify(Object.values(ele).join("")).toLowerCase());
-            console.log(searchQuery.value.toLowerCase());
-
-            return true;
-        };
-    });
-
-    reviews.value = new_reviews;
 });
 
 </script>

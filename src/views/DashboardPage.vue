@@ -25,7 +25,7 @@ watch([updateReviews, showMessageAlert], async () => {
 // To show alert message after every CRUD operation
 const handleAlert = (mes: any, code: any) => {
     showMessageAlert.value = { mes, code };
-    setTimeout(() => { showMessageAlert.value = { mes: "", code: "red" }; }, 2000)
+    setTimeout(() => { showMessageAlert.value = { mes: "", code: "red" }; }, 2000);
 }
 
 // Function to handle new review creation
@@ -95,14 +95,16 @@ const triggerAlert = async (res: any) => {
                                 class="text-capitalize ml-2 m-1">Submit a Review<i class="pi pi-plus ml-2" /></v-btn>
                         </template>
                         <template v-slot:default="{ isActive }">
-                            <CreationForm @send-data="handleCreate" />
+                            <CreationForm @send-data="handleCreate"
+                                @cancel-option="(data) => { if (data) showDialog = false }" />
                         </template>
                     </v-dialog>
 
                     <!-- Alert Message to show result of CRUD operation -->
-                    <div v-show="showMessageAlert.mes" class="fixed z-10 top-8 right-0 left-0 flex justify-center">
-                        <div class="`sticky w-1/4 text-white text-base font-normal p-5 rounded-lg shadow-lg
-                            flex justify-between items-center`" :class="`bg-${showMessageAlert.code}-500`">
+                    <div v-show="showMessageAlert.mes"
+                        class="bg-yellow-500 fixed z-10 top-8 right-0 left-0 flex justify-center">
+                        <div class="sticky w-1/4 text-white text-base font-normal p-5 rounded-lg shadow-lg
+                            flex justify-between items-center" :class="`bg-${showMessageAlert.code}-500`">
                             <div>{{ showMessageAlert.mes }}</div>
                             <i class="pi pi-check-circle"></i>
                         </div>

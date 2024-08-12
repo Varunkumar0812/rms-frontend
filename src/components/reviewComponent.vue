@@ -116,7 +116,8 @@ const handleEdit = async ({ title, type, rating, pros, cons, suggestions, user_i
                         </v-btn>
                     </template>
                     <template v-slot:default="{ isActive }">
-                        <CreationForm @send-data="handleEdit" />
+                        <CreationForm @send-data="handleEdit"
+                            @cancel-option="(data) => { if (data) showDialog = false }" />
                     </template>
                 </v-dialog>
 

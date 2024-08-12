@@ -18,7 +18,7 @@ const allClear = () => {
 // Function that handles login
 const handleLogin = async () => {
     try {
-        const userData = (await axios.post("http://127.0.0.1:3333/login", { email: email.value, password: password.value })).data;
+        const userData = (await axios.post(`http://127.0.0.1:3333/login`, { email: email.value, password: password.value })).data;
         console.log(userData);
 
         if (userData) {
@@ -32,7 +32,9 @@ const handleLogin = async () => {
     catch (err: any) {
         errorMes.value = [];
         if (err?.response?.data) errorMes.value = err.response.data;
-        invalidUser.value = true;
+        console.log(errorMes.value);
+
+        if (errorMes.value.length != 0) if (!errorMes.value[0].rule) invalidUser.value = true;
         allClear();
     }
 }
