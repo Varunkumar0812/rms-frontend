@@ -26,16 +26,16 @@ The Official Review Management System is a comprehensive platform designed to fa
 Here are some screenshots of the Official Review Management System:
 
 1. **Sign Up Page:**
-   ![Sign In Page](src/assets/dashboard-page.png)
+   ![Sign In Page](src/assets/signup-page.png)
 
 2. **Reviews Page:**
-   ![Reviews Page](https://example.com/screenshot3.png)
+   ![Reviews Page](src/assets/reviews-page.png)
 
 3. **Dashboard Page:**
-   ![Dashboard Page](https://example.com/screenshot4.png)
+   ![Dashboard Page](src/assets/dashboard-page.png)
 
 4. **Create/Edit Review Modal:**
-   ![Create/Edit Review Modal](https://example.com/screenshot5.png)
+   ![Create/Edit Review Modal](src/assets/edit-modal.png)
 
 
 ## Styling and Components
