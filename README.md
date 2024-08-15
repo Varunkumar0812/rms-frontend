@@ -1,33 +1,93 @@
-# rms-frontend
+# Official Review Management System
 
-This template should help get you started developing with Vue 3 in Vite.
+## Project Overview
 
-## Recommended IDE Setup
+The Official Review Management System is a comprehensive platform designed to facilitate the management of formal reviews or evaluations. Built with AdonisJS for the backend and Vue.js for the frontend, the system provides a polished, user-friendly interface. It is highly adaptable for various use cases, such as employee performance reviews or academic evaluations.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Key Features and Pages
 
-## Type Support for `.vue` Imports in TS
+- **Landing Page**:  
+  Introduction to the system, directing users to sign in or register.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+- **Sign In/Up Pages**:  
+  User authentication with frontend validation and backend error messages.
 
-## Customize configuration
+- **Reviews Page**:  
+  - Displays all reviews with pagination, search, and filter options.
+  - Reviews are presented as cards showing details like stars, pros, and cons.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- **Dashboard Page**:  
+  - Displays user-specific reviews without pagination.
+  - Includes options to create new reviews, edit existing ones, delete reviews, and logout.
+  - Modals are used for creating and editing reviews.
 
-## Project Setup
+## Screenshots
 
-```sh
-npm install
-```
+Here are some screenshots of the Official Review Management System:
 
-### Compile and Hot-Reload for Development
+1. **Sign Up Page:**
+   ![Sign In Page](src/assets/dashboard-page.png)
 
-```sh
-npm run dev
-```
+2. **Reviews Page:**
+   ![Reviews Page](https://example.com/screenshot3.png)
 
-### Type-Check, Compile and Minify for Production
+3. **Dashboard Page:**
+   ![Dashboard Page](https://example.com/screenshot4.png)
 
-```sh
-npm run build
-```
+4. **Create/Edit Review Modal:**
+   ![Create/Edit Review Modal](https://example.com/screenshot5.png)
+
+
+## Styling and Components
+
+- **Vuetify**:  
+  Used for components like modals, alerts, cards, and text fields.
+
+- **Tailwind CSS**:  
+  Applied for consistent styling and layout across the application.
+
+## Vue.js Key Concepts Used
+
+- **Vue Router**:  
+  For navigation between different pages like Reviews and Dashboard.
+
+- **Lifecycle Hooks**:  
+  Managing component lifecycle events.
+
+- **Options API and Composition API**:  
+  Structuring components and handling logic.
+
+- **Directives**:  
+  Adding dynamic behavior to elements.
+
+- **Event Handling**:  
+  Capturing and responding to user interactions.
+
+- **Props Passing**:  
+  Sharing data between components.
+
+- **Provide and Inject**:  
+  Sharing data across the component hierarchy.
+
+- **Watch**:  
+  Reacting to changes in data.
+
+- **Computed Properties**:  
+  Deriving values based on reactive data.
+
+- **Pinia Stores**:  
+  Managing global state.
+
+- **Emit**:  
+  Handling event communication between components.
+
+## Technologies Used
+
+- **Backend**: AdonisJS
+- **Database**: MySQL
+- **Frontend**: Vue.js, Vuetify, Tailwind CSS
+- **State Management**: Pinia
+
+## Backend Repository
+
+For the backend implementation of this project using AdonisJS and MySQL, please visit the [Backend Repository](https://github.com/Varunkumar0812/rms-backend).
