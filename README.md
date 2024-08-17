@@ -1,8 +1,8 @@
-# Official Review Management System
+# Review Management System
 
 ## Project Overview
 
-The Official Review Management System is a comprehensive platform designed to facilitate the management of formal reviews or evaluations. Built with AdonisJS for the backend and Vue.js for the frontend, the system provides a polished, user-friendly interface. It is highly adaptable for various use cases, such as employee performance reviews or academic evaluations.
+The Review Management System is a comprehensive platform designed to facilitate the management of formal reviews or evaluations. Built with AdonisJS for the backend and Vue.js for the frontend, the system provides a polished, user-friendly interface. It is highly adaptable for various use cases, such as employee performance reviews or academic evaluations.
 
 ## Key Features and Pages
 
